@@ -101,23 +101,44 @@ export async function generateTTS(input: TTSInput): Promise<{
   const endpoint = `${API_ENDPOINTS.TTS(voiceId)}?output_format=${outputFormat}`;
 
   // Generate audio
+  console.error('[TTS] Generating audio...');
   const audioBuffer = await client.generateAudio(endpoint, requestBody);
+  console.error(`[TTS] Audio generated, size: ${audioBuffer.byteLength} bytes`);
 
   // Determine output path
   let outputPath = input.output_path;
   if (!outputPath) {
     const outputDir = process.env.OUTPUT_DIR || '.';
+    console.error(`[TTS] OUTPUT_DIR from env: "${outputDir}"`);
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
     const extension = outputFormat.startsWith('mp3') ? 'mp3' : outputFormat.startsWith('pcm') ? 'wav' : 'audio';
     outputPath = path.join(outputDir, `tts_${timestamp}.${extension}`);
   }
+  console.error(`[TTS] Output path: "${outputPath}"`);
 
   // Ensure directory exists
   const dir = path.dirname(outputPath);
-  await fs.mkdir(dir, { recursive: true });
+  console.error(`[TTS] Creating directory: "${dir}"`);
+  try {
+    await fs.mkdir(dir, { recursive: true });
+    console.error('[TTS] Directory created/verified');
+  } catch (mkdirError) {
+    console.error(`[TTS] Error creating directory: ${mkdirError}`);
+    throw mkdirError;
+  }
 
   // Write audio file
-  await fs.writeFile(outputPath, Buffer.from(audioBuffer));
+  try {
+    await fs.writeFile(outputPath, Buffer.from(audioBuffer));
+    console.error(`[TTS] File written successfully to: "${outputPath}"`);
+
+    // Verify file exists
+    const stats = await fs.stat(outputPath);
+    console.error(`[TTS] File verified, size on disk: ${stats.size} bytes`);
+  } catch (writeError) {
+    console.error(`[TTS] Error writing file: ${writeError}`);
+    throw writeError;
+  }
 
   return {
     file_path: outputPath,

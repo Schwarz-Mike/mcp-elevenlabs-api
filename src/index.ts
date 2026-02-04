@@ -390,6 +390,12 @@ async function main() {
     process.exit(1);
   }
 
+  // Log configuration at startup
+  console.error('=== ElevenLabs MCP Server Starting ===');
+  console.error(`OUTPUT_DIR: "${process.env.OUTPUT_DIR || '(not set, using current directory)'}"`);
+  console.error(`API Key: ${process.env.ELEVENLABS_API_KEY?.substring(0, 10)}...`);
+  console.error(`Working directory: ${process.cwd()}`);
+
   const transport = new StdioServerTransport();
   await server.connect(transport);
 
