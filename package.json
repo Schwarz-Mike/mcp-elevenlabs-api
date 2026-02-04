@@ -1,0 +1,36 @@
+{
+  "name": "mcp-elevenlabs-api",
+  "version": "1.0.0",
+  "description": "MCP Server for ElevenLabs API - TTS, Music, and Sound Effects generation",
+  "main": "build/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "dev": "tsc --watch",
+    "test": "node --test",
+    "inspect": "npx @modelcontextprotocol/inspector node build/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "elevenlabs",
+    "tts",
+    "text-to-speech",
+    "music-generation",
+    "sound-effects",
+    "ai-audio"
+  ],
+  "author": "",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

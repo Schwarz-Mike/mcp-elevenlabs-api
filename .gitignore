@@ -1,3 +1,9 @@
+# Build output
+build/
+
+# Generated audio output
+output/
+
 # Logs
 logs
 *.log
