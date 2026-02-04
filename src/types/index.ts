@@ -5,6 +5,7 @@ export interface VoiceSettings {
   similarity_boost: number;
   style?: number;
   use_speaker_boost?: boolean;
+  speed?: number;
 }
 
 export interface TTSRequest {

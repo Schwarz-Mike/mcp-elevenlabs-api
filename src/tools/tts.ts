@@ -24,6 +24,8 @@ const voiceSettingsSchema = z.object({
     .describe('Style exaggeration (0-1). Only for v2 models'),
   use_speaker_boost: z.boolean().default(DEFAULT_VOICE_SETTINGS.use_speaker_boost).optional()
     .describe('Boost speaker similarity'),
+  speed: z.number().min(0.25).max(4.0).default(1.0).optional()
+    .describe('Speaking speed (0.25-4.0). 1.0 = normal, <1 = slower, >1 = faster'),
 });
 
 // TTS input schema

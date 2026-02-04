@@ -18,6 +18,7 @@ const voiceSettingsSchema = z.object({
   similarity_boost: z.number().min(0).max(1).default(DEFAULT_VOICE_SETTINGS.similarity_boost),
   style: z.number().min(0).max(1).default(DEFAULT_VOICE_SETTINGS.style).optional(),
   use_speaker_boost: z.boolean().default(DEFAULT_VOICE_SETTINGS.use_speaker_boost).optional(),
+  speed: z.number().min(0.25).max(4.0).default(1.0).optional(),
 });
 
 // Dialogue input schema
